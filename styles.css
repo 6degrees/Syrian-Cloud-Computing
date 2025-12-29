@@ -1,0 +1,1073 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Kill default blue links */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  html,
+body {
+  height: 100%;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: white;
+    overflow-x: hidden;
+  
+    /* solid base to prevent color breakout */
+    background-color: #0E1716;
+  }
+
+  
+  /* ================= NAVBAR ================= */
+  
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+  
+    /* CSS variables driven by JS */
+    --bg-opacity: 0;
+    --blur-amount: 0px;
+    --shadow-opacity: 0;
+  
+    background: rgba(10, 20, 25, var(--bg-opacity));
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    box-shadow: 0 4px 4px rgba(0, 0, 0, var(--shadow-opacity));
+  
+    z-index: 9999;
+    isolation: isolate;
+  
+    transition:
+      background 0.15s linear,
+      backdrop-filter 0.15s linear,
+      box-shadow 0.15s linear;
+  }
+  
+  .nav-container {
+    position: relative;
+    z-index: 1;
+  }  
+  
+  .nav-container {
+    max-width: 1400px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 3rem;
+  
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+  
+  .nav-logo {
+    height: 36px;
+  }
+  
+  /* CENTER LINKS */
+  .nav-center {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+  }
+  
+  .nav-center a {
+    position: relative;
+    font-size: 0.95rem;
+    opacity: 0.75;
+    padding-bottom: 6px;
+    transition: opacity 0.2s ease;
+  }
+  
+  .nav-center a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.85);
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .nav-center a:hover {
+    opacity: 1;
+  }
+  
+  .nav-center a:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+  
+  /* CTA */
+  .nav-cta {
+    position: relative;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    padding-bottom: 6px;
+  }
+  
+  .nav-cta::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.95);
+  }
+  
+  /* ================= HERO ================= */
+  
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    padding-top: 110px;
+    overflow: hidden;
+    isolation: isolate;
+  
+    /* 🌈 gradient lives ONLY in hero */
+    background: linear-gradient(
+      180deg,
+      #0E1716 0%,
+      #23322E 50%,
+      #414336 75%,
+      #484433 88%,
+      #6D6148 100%
+    );
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 320px;
+  
+    background: linear-gradient(
+      to bottom,
+      rgba(14, 23, 22, 0) 0%,
+      rgba(14, 23, 22, 0.35) 40%,
+      #0E1716 100%
+    );
+  
+    pointer-events: none;
+    z-index: 6;
+  }
+  .bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .layer {
+    position: absolute;
+    inset: -40%;
+    background-size: 200% 200%;
+    background-position: 50% 50%;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  /* BACK */
+  .layer-back {
+    background:
+      radial-gradient(
+        circle at var(--gx,50%) var(--gy,50%),
+        rgba(109,97,72,0.25),
+        transparent 65%
+      );
+    filter: blur(90px);
+    opacity: 0.35;
+  }
+  
+  
+  /* MID */
+  .layer-mid {
+    background:
+      radial-gradient(
+        circle at var(--gx,50%) var(--gy,50%),
+        rgba(109,97,72,0.35),
+        transparent 60%
+      );
+    filter: blur(55px);
+    opacity: 0.55;
+  }  
+  
+  /* FRONT */
+  .layer-front {
+    background:
+      radial-gradient(
+        circle at var(--gx,50%) var(--gy,50%),
+        rgba(160,145,100,0.45),
+        transparent 55%
+      );
+    filter: blur(35px);
+    opacity: 0.75;
+  }  
+  
+  
+  /* CONTENT */
+  .content {
+    position: relative;
+    z-index: 10;
+    min-height: calc(100svh - 110px);
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  
+    text-align: center;
+
+    transform: translateY(-60px);
+  }
+  
+  .pill {
+    background: rgba(255,255,255,0.12);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+  }
+  
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 600;
+    color: #ffffff;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  button {
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .primary {
+    background: white;
+    color: black;
+  }
+  
+  .secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+  /* FEATURE SECTION */
+.feature {
+    padding: 8rem 6vw;
+  }
+  
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .feature h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  
+  .feature-card {
+    height: 260px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #1f2d2b, #0e1716);
+  }
+  
+  .feature-info h3 {
+    margin-bottom: 1rem;
+  }
+  
+  .feature-info p {
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-info a {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-info .meta {
+    font-size: 0.75rem;
+    opacity: 0.5;
+  }
+  
+  /* SERVICES */
+  .services {
+    padding: 6rem 6vw;
+    text-align: center;
+  }
+  
+  .services h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 4rem;
+  }
+  
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .service {
+    background: rgba(255,255,255,0.05);
+    border-radius: 18px;
+    padding: 2.5rem;
+    backdrop-filter: blur(12px);
+  }
+  
+  .service .icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+  
+  .service h4 {
+    margin-bottom: 1rem;
+  }
+  
+  .service p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  
+  .service a {
+    font-size: 0.85rem;
+  }
+  
+  /* CTA */
+  .cta {
+    padding: 6rem 6vw 8rem;
+    text-align: center;
+  }
+  
+  .cta .pill.small {
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+  }
+  
+  .cta h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  .cta p {
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+  /* CTA */
+.cta {
+    padding: 6rem 6vw;
+    text-align: center;
+  }
+  
+  .cta .pill.small {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  .cta p {
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+  
+  /* FEATURE LARGE */
+  .feature-large {
+    padding: 8rem 6vw;
+  }
+  
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr 0.6fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .feature-card,
+  .feature-media {
+    background: rgba(255,255,255,0.05);
+    border-radius: 18px;
+    padding: 2rem;
+  }
+  
+  .feature-media {
+    height: 260px;
+  }
+  
+  .feature-stats div {
+    margin-bottom: 2rem;
+  }
+  
+  .feature-stats strong {
+    font-size: 1.5rem;
+  }
+  
+  /* FAQ */
+  .faq {
+    padding-left: 10vw;
+  padding-right: 10vw;
+    height: 793px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .faq h2 {
+    font-size: 40px;
+  margin-bottom: 3rem;
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .faq-question {
+    font-size: 24px;
+    font-weight: 400;
+    padding: 1.5rem 0;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0.6;
+    transition: max-height 0.3s ease;
+  }
+  
+  /* FOOTER */
+  .footer {
+    padding: 6rem 6vw;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+  
+  .footer a,
+  .footer span {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer h5 {
+    margin-bottom: 1rem;
+  }
+  /* ================= FOOTER GLASS ================= */
+
+  .footer-glass {
+    width: 100%;
+    height: 679px;
+  
+    /* IMPORTANT */
+    background: transparent;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    padding: 0; /* no visual padding */
+  }
+  
+  
+  .footer-inner {
+    width: calc(100%); /* slight inset like screenshot */
+    height: 100%;
+    max-width: none;
+  
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr 1fr 1.3fr;
+    gap: 3rem;
+  
+    padding: 4rem;
+    border-radius: 18px;
+  
+    /* ✨ Glass card ONLY */
+    background: none;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(18px);
+  
+    box-shadow:
+      none;
+  }
+  
+  /* BRAND */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footer-logo {
+    width: 120px;
+  }
+  
+
+  
+  /* COLUMNS */
+  .footer-col h5,
+  .footer-description h4 {
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+  }
+  
+  .footer-col a,
+  .footer-col p {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 0.8rem;
+  }
+  
+  /* DESCRIPTION */
+  .footer-description p {
+    opacity: 0.6;
+    line-height: 1.6;
+  }
+  
+  /* SOCIAL */
+  .footer-social {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .footer-social a {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+  
+    font-size: 1.1rem;
+    opacity: 0.8;
+  }
+  /* ===============================
+   DEEP FEATURE – OVERRIDES ONLY
+   (NO OTHER SECTIONS TOUCHED)
+================================ */
+
+/* Grid spacing & proportions */
+.feature-large .feature-grid {
+    grid-template-columns: 1.4fr 1fr 1.6fr 0.6fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  
+  /* LEFT MAIN HEADING */
+  .feature-large .feature-left h2 {
+    font-size: 80px;
+    font-weight: 500; /* Medium */
+    line-height: 1.1;
+  }
+  
+  /* CARD TITLE */
+  .feature-large .feature-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* distributes content */
+    min-height: 360px;              /* matches visual height */
+  }
+  
+  /* CARD BODY */
+  .feature-large .feature-card p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.7;
+  }
+  .feature-large .feature-card h4 {
+    margin-bottom: 1rem;
+  }
+  .feature-large .feature-card p {
+    margin-bottom: auto; /* pushes Learn More to bottom */
+  }
+  
+  .feature-large .feature-card a {
+    margin-top: 2rem;
+  }
+  
+  /* CARD CTA */
+  .feature-large .feature-card a {
+    font-size: 20px;
+    font-weight: 500; /* Medium */
+  }
+  
+  /* VIDEO PLACEHOLDER */
+  .feature-large .feature-media {
+    height: 360px;
+    background: #d3d3d3; /* grey video placeholder */
+    border-radius: 20px;
+  }
+  
+  /* STATS */
+  .feature-large .feature-stats strong {
+    font-size: 32px;
+    font-weight: 500; /* Medium */
+    display: block;
+  }
+  
+  .feature-large .feature-stats span {
+    font-size: 16px;
+    font-weight: 500; /* Medium */
+    opacity: 0.7;
+  }
+  
+  .feature-large .feature-stats div {
+    margin-bottom: 2.5rem;
+  }
+  /* VIDEO INSIDE FEATURE PLACEHOLDER */
+.feature-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* fills box like a hero video */
+    border-radius: 20px;    /* matches container */
+    display: block;
+  }
+  
+  /* FIX: Remove gap between video and container */
+.feature-large .feature-media {
+    padding: 0;                 /* 🔑 remove inner gap */
+    background: transparent;    /* optional: no overlay */
+    overflow: hidden;           /* ensures rounded corners clip video */
+  }
+  /* ===============================
+   CTA – FULL WIDTH GLASS STRIP
+================================ */
+
+.cta {
+    width: 100%;
+    margin: 0;
+    padding: 6rem 0;
+  
+    background: transparent;
+    text-align: center;
+  
+    /* Full-width top & bottom lines */
+    border-top: 1px solid rgba(255,255,255,0.18);
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+  }
+  
+  /* Center inner content visually */
+  .cta > * {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Heading */
+  .cta h2 {
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+  
+  /* Subtext */
+  .cta p {
+    font-size: 24px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-bottom: 2.5rem;
+  }
+  
+  /* Button */
+  .cta button.primary {
+    font-size: 10px;
+    font-weight: 400;
+    padding: 0.6rem 1.4rem;
+  }
+/* ===============================
+   FAQ – FULL WIDTH DIVIDER LINES
+================================ */
+
+.faq {
+    width: 100%;
+    margin: 0;
+  
+    /* keep your existing spacing & height */
+    padding-left: 10vw;
+    padding-right: 10vw;
+    height: 793px;
+  
+    /* ONLY the dividers */
+    border-top: 1px solid rgba(255,255,255,0.18);
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+  }
+    /* ===============================
+   SERVICES – TYPOGRAPHY OVERRIDE
+   (NO layout changes)
+================================ */
+
+/* Section title */
+.services h2 {
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 5rem;
+  }
+  
+  /* Card title */
+  .service h4 {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+  
+  /* Card description */
+  .service p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.7;
+  }
+  
+  /* Learn More */
+  .service a {
+    font-size: 16px;
+    font-weight: 500;
+  }
+/* ===============================
+   SERVICES – FULL WIDTH DIVIDERS
+================================ */
+
+.services {
+    width: 100%;
+    margin: 0;
+  
+    /* keep existing padding */
+    padding-left: 6vw;
+    padding-right: 6vw;
+  
+    /* full-width divider lines */
+    border-top: 1px solid rgba(255,255,255,0.18);
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    
+  }
+  /* ===============================
+   SERVICES CARD SIZE FIX
+================================ */
+
+.service {
+    width: 474.81px;
+    height: 485.53px;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    padding: 2.5rem;
+    box-sizing: border-box;
+  }
+
+  /* ===== FEATURE LAYOUT ===== */
+
+.feature {
+    padding: 8rem 6vw;
+  }
+  
+  .feature-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 817.67px 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  /* LEFT */
+  .feature-left h2 {
+    font-size: 72px;     /* key change */
+    line-height: 1.05;   /* tighter lines */
+    margin-bottom: 2rem;
+  }
+  
+  
+  .feature-tags {
+    margin-top: 1rem;
+  }  
+  
+  .feature-tags li {
+    font-size: 20px;
+    font-weight: 400;
+    opacity: 0.45;
+  }
+  
+  .feature-tags li.active {
+    opacity: 1;
+  }
+  
+  
+  /* CENTER IMAGE */
+  .feature-card {
+    width: 817.67px;
+    height: 393.81px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1f2d2b, #0e1716);
+  }
+  
+  /* RIGHT */
+  .feature-info h3 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+  }
+  
+  .feature-info p {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+    max-width: 360px;
+  }
+  
+  .feature-info a {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  
+  .feature-meta {
+    display: flex;
+    gap: 3rem;
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  .feature-left {
+    display: grid;
+    grid-template-rows: auto auto;
+    align-content: start;
+  }
+  
+  
+              
+    /* ===============================
+   SCROLL REVEAL ANIMATION
+================================ */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* ===============================
+   LOGO MARQUEE
+================================ */
+
+.logo-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 4rem 0;
+  pointer-events: none;
+}
+
+.logo-track {
+  display: flex;
+  gap: 5rem;
+  width: max-content;
+  animation: marquee 90s linear infinite;
+}
+
+.logo-track img {
+  height: 36px;
+  opacity: 0.35;
+  filter: grayscale(100%);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+/* ===============================
+   FEATURED ARTICLE – HARD ISOLATION
+   (NO OTHER SECTIONS AFFECTED)
+================================ */
+
+.feature .feature-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 817.67px 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  /* LEFT COLUMN */
+  .feature .feature-left h2 {
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+  }
+  
+  .feature .feature-tags {
+    margin-top: 1rem;
+  }
+  
+  .feature .feature-tags li {
+    font-size: 20px;
+    font-weight: 400;
+    opacity: 0.45;
+    list-style: none;
+  }
+  
+  .feature .feature-tags li.active {
+    opacity: 1;
+  }
+  
+  /* CENTER CARD */
+  .feature .feature-card {
+    width: 817.67px;
+    height: 393.81px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1f2d2b, #0e1716);
+  }
+  
+  /* RIGHT CONTENT */
+  .feature .feature-info h3 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+  }
+  
+  .feature .feature-info p {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+    max-width: 360px;
+  }
+  
+  .feature .feature-info a {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  
+  .feature .feature-meta {
+    display: flex;
+    gap: 3rem;
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  /* ===============================
+   DEEP FEATURE – SIZE ADJUSTMENTS
+   (VIDEO + CARD ONLY)
+================================ */
+
+/* Intelligent Cloud Automation card */
+.feature-large .feature-card {
+    width: 526.7px;
+    height: 485.24px;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    padding: 2.5rem;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure text fits cleanly */
+  .feature-large .feature-card h4 {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  
+  .feature-large .feature-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.7;
+    margin-top: 1rem;
+    margin-bottom: auto;
+  }
+  
+  .feature-large .feature-card a {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 2rem;
+  }
+  
+  /* Video placeholder container */
+  .feature-large .feature-media {
+    width: 672.23px;
+    height: 485.24px;
+  
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+  }
+  
+  /* Video fill behavior */
+  .feature-large .feature-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  /* ===============================
+   FEATURE ARTICLE – VIDEO FIT FIX
+   (NO ANIMATION, NO HOVER)
+================================ */
+
+/* Remove padding so video can fill */
+.feature-card.feature-video {
+    padding: 0 !important;
+    overflow: hidden;        /* clips video to rounded corners */
+  }
+  
+  /* Make video fill container */
+  .feature-card.feature-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* fills container without distortion */
+    display: block;          /* removes inline gap */
+  }
+  
