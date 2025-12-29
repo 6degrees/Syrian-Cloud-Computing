@@ -95,3 +95,31 @@ window.addEventListener("scroll", () => {
   navbar.style.setProperty("--blur-amount", `${24 * eased}px`);
   navbar.style.setProperty("--shadow-opacity", (0.25 * eased).toFixed(3));
 });
+/* ===============================
+   SCROLL REVEAL OBSERVER
+================================ */
+
+const revealElements = document.querySelectorAll(
+    "section, footer"
+  );
+  
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: "0px 0px -80px 0px",
+    }
+  );
+  
+  revealElements.forEach((el) => {
+    el.classList.add("reveal");
+    revealObserver.observe(el);
+  });
+  
