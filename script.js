@@ -122,4 +122,15 @@ const revealElements = document.querySelectorAll(
     el.classList.add("reveal");
     revealObserver.observe(el);
   });
-  
+  /* ===============================
+   FEATURE TAGS TOGGLE
+================================ */
+
+const featureTags = document.querySelectorAll(".feature-tags li");
+
+featureTags.forEach(tag => {
+  tag.addEventListener("click", () => {
+    featureTags.forEach(t => t.classList.remove("active"));
+    tag.classList.add("active");
+  });
+});
