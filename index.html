@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SCC - Syrian Cloud Computing</title>
+  <title>SCC Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -11,11 +11,11 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
+  <div class="edge-glows"></div>
 <!-- NAVBAR -->
 <header class="navbar">
   <div class="nav-container">
-    <img class="nav-logo" src="./Assets/logo.png" alt="Syrian Cloud Computing" />
+    <img class="nav-logo" src="assets/logo.png" alt="Syrian Cloud Computing" />
 
     <nav class="nav-center">
       <a href="#">What We Do</a>
@@ -49,20 +49,20 @@
 <!-- LOGO MARQUEE -->
 <section class="logo-marquee">
     <div class="logo-track">
-      <img src="./Assets/workspace.svg" alt="Work Space" />
-      <img src="./Assets/mountain.svg" alt="Mountain" />
-      <img src="./Assets/wogrk.svg" alt="Wogrk" />
-      <img src="./Assets/qerja.svg" alt="Qerja" />
-      <img src="./Assets/hustle.svg" alt="Hustle" />
-      <img src="./Assets/kitwork.svg" alt="KitWork" />
+      <img src="assets/workspace.svg" alt="Work Space" />
+      <img src="assets/mountain.svg" alt="Mountain" />
+      <img src="assets/wogrk.svg" alt="Wogrk" />
+      <img src="assets/qerja.svg" alt="Qerja" />
+      <img src="assets/hustle.svg" alt="Hustle" />
+      <img src="assets/kitwork.svg" alt="KitWork" />
   
       <!-- duplicate for seamless loop -->
-      <img src="./Assets/workspace.svg" alt="" />
-      <img src="./Assets/mountain.svg" alt="" />
-      <img src="./Assets/wogrk.svg" alt="" />
-      <img src="./Assets/qerja.svg" alt="" />
-      <img src="./Assets/hustle.svg" alt="" />
-      <img src="./Assets/kitwork.svg" alt="" />
+      <img src="assets/workspace.svg" alt="" />
+      <img src="assets/mountain.svg" alt="" />
+      <img src="assets/wogrk.svg" alt="" />
+      <img src="assets/qerja.svg" alt="" />
+      <img src="assets/hustle.svg" alt="" />
+      <img src="assets/kitwork.svg" alt="" />
     </div>
   </section>
   
@@ -82,14 +82,19 @@
       </div>
   
       <!-- CENTER IMAGE -->
-      <div class="feature-card feature-video">
+      <div class="feature-card feature-media-switch">
         <video
-          src="./Assets/openingvideo.mp4"
+          id="featureVideo"
+          src="assets/openingvideo.mp4"
           muted
           loop
           playsinline
+          autoplay
         ></video>
+      
+        <img id="featureImage" src="" alt="" />
       </div>
+      
       
   
       <!-- RIGHT CONTENT -->
@@ -121,7 +126,7 @@
   <div class="service-cards">
     <div class="service">
         <span class="icon">
-            <img src="./Assets/encrypted.svg" alt="Encrypted" />
+            <img src="assets/encrypted.svg" alt="Encrypted" />
           </span>          
       <h4>Secure Data Storage</h4>
       <p>
@@ -133,7 +138,7 @@
 
     <div class="service">
         <span class="icon">
-            <img src="./Assets/cloud.svg" alt="Cloud" />
+            <img src="assets/cloud.svg" alt="Cloud" />
           </span>          
       <h4>Cloud Computing</h4>
       <p>
@@ -145,7 +150,7 @@
 
     <div class="service">
         <span class="icon">
-            <img src="./Assets/apps.svg" alt="Apps" />
+            <img src="assets/apps.svg" alt="Apps" />
           </span>          
       <h4>Edge Computing</h4>
       <p>
@@ -159,7 +164,12 @@
 
 <!-- CTA -->
 <section class="cta">
-  <span class="pill small">Let’s collaborate</span>
+
+  <!-- existing content -->
+  <span class="pill small pill-glow">
+    <span class="glow-dot"></span>
+    Let’s collaborate
+  </span>  
   <h2>How can we work together?</h2>
   <p>Chat with us and lets see.</p>
   <button class="primary">Contact Us</button>
@@ -183,7 +193,7 @@
 
     <div class="feature-media">
         <video
-          src="./Assets/video.mp4"
+          src="assets/video.mp4"
           autoplay
           muted
           loop
@@ -201,17 +211,29 @@
 
 <!-- FAQ -->
 <section class="faq">
-  <h2>FAQ’s</h2>
+  
+  <h2 class="faq-title">FAQ’s</h2>
+<p class="faq-description">
+  Find clear answers to common questions about our cloud solutions, security, and onboarding process.
+</p>
+
 
   <div class="faq-item">
-    <button class="faq-question">How do I get started?</button>
+    <button class="faq-question">
+      <span class="faq-text">How do I get started?</span>
+      <span class="faq-arrow">⌄</span>
+    </button>    
     <div class="faq-answer">
       Get in touch with our team and we’ll guide you through onboarding.
     </div>
   </div>
 
   <div class="faq-item">
-    <button class="faq-question">What makes your cloud solutions different?</button>
+    <button class="faq-question">
+    <span class="faq-text">What makes your cloud solutions different?</span>
+    <span class="faq-arrow">⌄</span>
+  </button>
+  
     <div class="faq-answer">
       We combine intelligent automation, security-first design,
       and scalable infrastructure.
@@ -219,7 +241,10 @@
   </div>
 
   <div class="faq-item">
-    <button class="faq-question">How do I get started?</button>
+    <button class="faq-question">
+      <span class="faq-text">How do i Get started?</span>
+      <span class="faq-arrow">⌄</span>
+    </button>
     <div class="faq-answer">
       Simply contact us and our specialists will assist you.
     </div>
@@ -232,7 +257,7 @@
   
       <!-- BRAND -->
       <div class="footer-brand">
-        <img src="./Assets/logo.png" alt="SCC Logo" class="footer-logo" />
+        <img src="assets/logo.png" alt="SCC Logo" class="footer-logo" />
       </div>
   
       <!-- CONTACT -->
@@ -258,20 +283,8 @@
         <h5>Quick Links</h5>
         <a href="#">About Us</a>
         <a href="#">Services</a>
-        <a href="#">Blog</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Career</a>
-      </div>
-  
-      <!-- RESOURCES -->
-      <div class="footer-col">
-        <h5>Resources</h5>
-        <a href="#">Case Studies</a>
-        <a href="#">API Access</a>
-        <a href="#">Help Center</a>
-        <a href="#">Webinars</a>
-        <a href="#">Knowledge Base</a>
-      </div>
+      </div>      
+    
   
       <!-- DESCRIPTION -->
       <div class="footer-description">

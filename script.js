@@ -69,16 +69,26 @@ if (!prefersReducedMotion) {
 
 document.querySelectorAll(".faq-question").forEach((q) => {
   q.addEventListener("click", () => {
+    const item = q.parentElement;
     const answer = q.nextElementSibling;
 
-    document.querySelectorAll(".faq-answer").forEach((a) => {
-      if (a !== answer) a.style.maxHeight = null;
+    document.querySelectorAll(".faq-item").forEach((i) => {
+      if (i !== item) {
+        i.classList.remove("active");
+        i.querySelector(".faq-answer").style.maxHeight = null;
+      }
     });
 
-    answer.style.maxHeight =
-      answer.style.maxHeight ? null : answer.scrollHeight + "px";
+    const isOpen = item.classList.contains("active");
+
+    item.classList.toggle("active");
+
+    answer.style.maxHeight = isOpen
+      ? null
+      : answer.scrollHeight + "px";
   });
 });
+
 
 /* ===============================
    NAVBAR SCROLL EFFECT
@@ -133,4 +143,120 @@ featureTags.forEach(tag => {
     featureTags.forEach(t => t.classList.remove("active"));
     tag.classList.add("active");
   });
+});
+const splineIframe = document.querySelector(".spline-bg iframe");
+
+let scrollTimeout;
+
+window.addEventListener("scroll", () => {
+  splineIframe.style.pointerEvents = "none";
+
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    splineIframe.style.pointerEvents = "auto";
+  }, 150);
+});
+/* ===============================
+   FEATURE TAG IMAGE SWITCH
+================================ */
+
+const tagMap = {
+  Technology: "assets/tech.jpg",
+  Security: "assets/security.jpg",
+  Innovation: "assets/innovation.jpg",
+};
+
+const tags = document.querySelectorAll(".feature-tags li");
+const featureVideo = document.getElementById("featureVideo");
+const featureImage = document.getElementById("featureImage");
+
+tags.forEach(tag => {
+  tag.addEventListener("click", () => {
+    // Active state
+    tags.forEach(t => t.classList.remove("active"));
+    tag.classList.add("active");
+
+    const label = tag.textContent.trim();
+
+    // ALWAYS show image (no video at all)
+    if (featureVideo) {
+      featureVideo.pause();
+      featureVideo.style.display = "none";
+    }
+
+    featureImage.src = tagMap[label];
+    featureImage.style.display = "block";
+  });
+});
+
+/* Default load = Technology image */
+featureImage.src = tagMap["Technology"];
+featureImage.style.display = "block";
+if (featureVideo) {
+  featureVideo.style.display = "none";
+}
+/* ===============================
+   INDUSTRIES TOGGLE (FEATURE)
+================================ */
+
+const industryData = {
+  technology: {
+    image: "assets/tech.jpg",
+    title: "Technology Infrastructure",
+    desc: "High-performance cloud platforms built for modern applications, scalability, and speed.",
+    stats: ["2.5× Faster", "Cloud Native"]
+  },
+  security: {
+    image: "assets/security.jpg",
+    title: "Cloud Security",
+    desc: "End-to-end encrypted systems designed for compliance, resilience, and data protection.",
+    stats: ["Zero Trust", "99.99% Secure"]
+  },
+  innovation: {
+    image: "assets/innovation.jpg",
+    title: "Innovation & AI",
+    desc: "AI-powered cloud solutions enabling automation, predictive analytics, and intelligent growth.",
+    stats: ["AI Driven", "Future Ready"]
+  }
+};
+
+const tag = document.querySelectorAll(".feature-tags li");
+const image = document.getElementById("industryImage");
+const title = document.getElementById("industryTitle");
+const desc = document.getElementById("industryDesc");
+const stats = document.getElementById("industryStats");
+
+tags.forEach(tag => {
+  tag.addEventListener("click", () => {
+    tags.forEach(t => t.classList.remove("active"));
+    tag.classList.add("active");
+
+    const key = tag.dataset.industry;
+    const data = industryData[key];
+
+    image.src = data.image;
+    title.textContent = data.title;
+    desc.textContent = data.desc;
+
+    stats.innerHTML = data.stats.map(s => `<span>${s}</span>`).join("");
+  });
+});
+/* ===============================
+   FIXED EDGE GLOWS (LEFT + RIGHT)
+================================ */
+
+const glowContainer = document.querySelector(".edge-glows");
+
+const glows = [
+  { side: "left", top: "25%" },
+  { side: "right", top: "55%" }
+];
+
+glows.forEach(({ side, top }) => {
+  const glow = document.createElement("div");
+  glow.className = `edge-glow edge-glow--${side}`;
+
+  glow.style.top = top;
+
+  glowContainer.appendChild(glow);
 });
