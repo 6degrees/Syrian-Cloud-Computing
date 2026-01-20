@@ -161,9 +161,9 @@ window.addEventListener("scroll", () => {
 ================================ */
 
 const tagMap = {
-  Technology: "assets/tech.jpg",
-  Security: "assets/security.jpg",
-  Innovation: "assets/innovation.jpg",
+  Technology: "./Assets/tech.jpg",
+  Security: "./Assets/security.jpg",
+  Innovation: "./Assets/innovation.jpg",
 };
 
 const tags = document.querySelectorAll(".feature-tags li");
