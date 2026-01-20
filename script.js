@@ -201,19 +201,19 @@ if (featureVideo) {
 
 const industryData = {
   technology: {
-    image: "assets/tech.jpg",
+    image: "./Assets/tech.jpg",
     title: "Technology Infrastructure",
     desc: "High-performance cloud platforms built for modern applications, scalability, and speed.",
     stats: ["2.5× Faster", "Cloud Native"]
   },
   security: {
-    image: "assets/security.jpg",
+    image: "./Assets/security.jpg",
     title: "Cloud Security",
     desc: "End-to-end encrypted systems designed for compliance, resilience, and data protection.",
     stats: ["Zero Trust", "99.99% Secure"]
   },
   innovation: {
-    image: "assets/innovation.jpg",
+    image: "./Assets/innovation.jpg",
     title: "Innovation & AI",
     desc: "AI-powered cloud solutions enabling automation, predictive analytics, and intelligent growth.",
     stats: ["AI Driven", "Future Ready"]
