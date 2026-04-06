@@ -63,6 +63,7 @@ body {
     z-index: 9999;
     isolation: isolate;
   
+    will-change: backdrop-filter, background, box-shadow;
     transition:
       background 0.15s linear,
       backdrop-filter 0.15s linear,
@@ -179,60 +180,6 @@ body {
     pointer-events: none;
     z-index: 6;
   }
-  .bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-  
-  .layer {
-    position: absolute;
-    inset: -40%;
-    background-size: 200% 200%;
-    background-position: 50% 50%;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  /* BACK */
-  .layer-back {
-    background:
-      radial-gradient(
-        circle at var(--gx,50%) var(--gy,50%),
-        rgba(109,97,72,0.25),
-        transparent 65%
-      );
-    filter: blur(90px);
-    opacity: 0.35;
-  }
-  
-  
-  /* MID */
-  .layer-mid {
-    background:
-      radial-gradient(
-        circle at var(--gx,50%) var(--gy,50%),
-        rgba(109,97,72,0.35),
-        transparent 60%
-      );
-    filter: blur(55px);
-    opacity: 0.55;
-  }  
-  
-  /* FRONT */
-  .layer-front {
-    background:
-      radial-gradient(
-        circle at var(--gx,50%) var(--gy,50%),
-        rgba(160,145,100,0.45),
-        transparent 55%
-      );
-    filter: blur(35px);
-    opacity: 0.75;
-  }  
-  
-  
   /* CONTENT */
   .content {
     position: relative;
@@ -286,48 +233,7 @@ body {
     background: rgba(255,255,255,0.15);
     color: white;
   }
-  /* FEATURE SECTION */
-.feature {
-    padding: 8rem 6vw;
-  }
-  
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  
-  .feature h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-  
-  .feature-card {
-    height: 260px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #1f2d2b, #0e1716);
-  }
-  
-  .feature-info h3 {
-    margin-bottom: 1rem;
-  }
-  
-  .feature-info p {
-    font-size: 16px;
-line-height: 1.65;
-opacity: 0.7;
-
-  }
-  
-  .feature-info a {
-    display: inline-block;
-    margin-bottom: 1rem;
-  }
-  
-  .feature-info .meta {
-    font-size: 0.75rem;
-    opacity: 0.5;
-  }
+    /* FEATURE — base styles defined further below */
   
   /* SERVICES */
   .services {
@@ -373,46 +279,7 @@ opacity: 0.7;
     font-size: 0.85rem;
   }
   
-  /* CTA */
-  .cta {
-    padding: 6rem 6vw 8rem;
-    text-align: center;
-  }
-  
-  .cta .pill.small {
-    margin-bottom: 1rem;
-    font-size: 0.7rem;
-  }
-  
-  .cta h2 {
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    margin-bottom: 0.5rem;
-  }
-  
-  .cta p {
-    opacity: 0.7;
-    margin-bottom: 2rem;
-  }
-  /* CTA */
-.cta {
-    padding: 6rem 6vw;
-    text-align: center;
-  }
-  
-  .cta .pill.small {
-    font-size: 0.7rem;
-    margin-bottom: 1rem;
-  }
-  
-  .cta h2 {
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    margin-bottom: 0.5rem;
-  }
-  
-  .cta p {
-    opacity: 0.7;
-    margin-bottom: 2rem;
-  }
+  /* CTA — base styles are defined further below */
   
   /* FEATURE LARGE */
   .feature-large {
@@ -560,6 +427,10 @@ opacity: 0.7;
     font-size: 0.95rem;
   }
   
+  .footer-address-heading {
+    margin-top: 2rem;
+  }
+
   .footer-col a,
   .footer-col p {
     display: block;
@@ -686,50 +557,7 @@ line-height: 1.6;
     background: transparent;    /* optional: no overlay */
     overflow: hidden;           /* ensures rounded corners clip video */
   }
-  /* ===============================
-   CTA – FULL WIDTH GLASS STRIP
-================================ */
-
-.cta {
-    width: 100%;
-    margin: 0;
-    padding: 6rem 0;
-  
-    background: transparent;
-    text-align: center;
-  
-    /* Full-width top & bottom lines */
-    border-top: 1px solid rgba(255,255,255,0.18);
-    border-bottom: 1px solid rgba(255,255,255,0.18);
-  }
-  
-  /* Center inner content visually */
-  .cta > * {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Heading */
-  .cta h2 {
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 1.2;
-  }  
-  
-  /* Subtext */
-  .cta p {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.5;
-  }  
-  
-  /* Button */
-  .cta button.primary {
-    font-size: 10px;
-    font-weight: 400;
-    padding: 0.6rem 1.4rem;
-  }
+  /* CTA — intermediate styles removed, final rules below */
 /* ===============================
    FAQ – FULL WIDTH DIVIDER LINES
 ================================ */
@@ -1100,6 +928,20 @@ opacity: 0.7;
     inset: 0;
     z-index: 0;
     overflow: hidden;
+    will-change: transform; /* GPU layer for scroll perf */
+  }
+
+  /* Hide Spline watermark */
+  .spline-bg::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 260px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 20%, #0E1716 60%);
+    z-index: 1;
+    pointer-events: none;
   }
   
   /* Fullscreen spline canvas */
@@ -1132,11 +974,6 @@ opacity: 0.7;
     pointer-events: auto;
   }
 
-@media (max-width: 768px) {
-    .spline-bg iframe {
-      pointer-events: none;
-    }
-  }
   /* ===============================
    HERO CONTENT VISIBILITY FIX
 ================================ */
@@ -1248,32 +1085,8 @@ opacity: 0.7;
   display: block;
 }
 /* ===============================
-   CTA – CATCHY GLASS CONTAINER
+   CTA – CONSOLIDATED STYLES
 ================================ */
-
-.cta {
-  position: relative;
-  width: 100%;
-  padding: 6rem 0;
-
-  text-align: center;
-
-  /* Glass background */
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.02)
-  );
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  /* Top & bottom dividers */
-  border-top: 1px solid rgba(255,255,255,0.18);
-  border-bottom: 1px solid rgba(255,255,255,0.18);
-
-  overflow: hidden;
-}
 
 .faq-description {
   margin-top: 0rem;
@@ -1392,38 +1205,7 @@ opacity: 0.7;
 .services h2 {
   margin-bottom: 5rem;
 }
-/* ===============================
-   CTA – FLASHY SPOTLIGHT
-================================ */
-
-.cta {
-  position: relative;
-  width: 100%;
-  padding: 8rem 0;
-
-  text-align: center;
-
-  /* Dark base */
-  background:
-    radial-gradient(
-      800px 300px at 50% 0%,
-      rgba(255,255,255,0.08),
-      transparent 70%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.05),
-      rgba(255,255,255,0.02)
-    );
-
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-
-  border-top: 1px solid rgba(255,255,255,0.25);
-  border-bottom: 1px solid rgba(255,255,255,0.25);
-
-  overflow: hidden;
-}
+/* CTA spotlight — consolidated below */
 /* Ambient animated glow */
 .cta::before {
   content: "";
@@ -1467,37 +1249,31 @@ opacity: 0.7;
 }
 .cta button.primary {
   position: relative;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
 
   font-size: 14px;
   font-weight: 500;
   padding: 0.9rem 2.4rem;
 
-  background: linear-gradient(
-    135deg,
-    #ffffff,
-    #eaeaea
-  );
-
+  background: var(--accent);
   color: #0e1716;
   border-radius: 999px;
 
   box-shadow:
-    0 10px 30px rgba(255,255,255,0.15),
-    0 25px 60px rgba(0,0,0,0.6);
+    0 12px 30px var(--accent-soft),
+    0 30px 60px rgba(0,0,0,0.6);
 
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
 
-/* Button hover = attention grab */
 .cta button.primary:hover {
   transform: translateY(-3px) scale(1.03);
 
   box-shadow:
-    0 15px 45px rgba(255,255,255,0.25),
-    0 35px 80px rgba(0,0,0,0.8);
+    0 18px 45px var(--accent-glow),
+    0 40px 80px rgba(0,0,0,0.75);
 }
 .cta button.primary::after {
   content: "";
@@ -1527,50 +1303,27 @@ opacity: 0.7;
 .cta {
   position: relative;
   width: 100%;
-  padding: 7rem 0; /* slightly tighter, still premium */
-
+  padding: 7rem 0;
   text-align: center;
 
-  background: #0E1716;
-
- /* ✅ your requested color */
+  background:
+    radial-gradient(
+      420px 180px at 50% 35%,
+      rgba(0, 0, 0, 0.06),
+      transparent 100%
+    ),
+    #101B1A;
 
   border-top: 1px solid rgba(255,255,255,0.18);
   border-bottom: 1px solid rgba(255,255,255,0.18);
 
   overflow: hidden;
 }
+
 .cta > * {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-}
-.cta button.primary {
-  margin-top: 0rem; /* ⬅️ closer to text */
-}
-.cta {
-  position: relative;
-  width: 100%;
-  padding: 7rem 0;
-
-  text-align: center;
-
-  background:
-    radial-gradient(
-      420px 180px at 50% 35%,   /* ⬅️ smaller & centered */
-      rgba(0, 0, 0, 0.06),  /* ⬅️ neutral, no yellow */
-      transparent 100%
-    ),
-    #101B1A;
-
-  border-top: 1px solid rgba(0, 0, 0, 0.14);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
-
-  overflow: hidden;
-}
-.cta {
-  position: relative;
-  overflow: hidden; /* 🔑 this clips the logos at divider lines */
 }
 /* ===============================
    CTA PILL – GLOW DOT
@@ -1656,20 +1409,7 @@ opacity: 0.7;
 .edge-glow {
   animation: floatGlow 30s ease-in-out infinite alternate;
 }
-.cta button.primary {
-  background: var(--accent);
-  color: #0e1716;
-
-  box-shadow:
-    0 12px 30px var(--accent-soft),
-    0 30px 60px rgba(0,0,0,0.6);
-}
-
-.cta button.primary:hover {
-  box-shadow:
-    0 18px 45px var(--accent-glow),
-    0 40px 80px rgba(0,0,0,0.75);
-}
+/* CTA button accent styles consolidated above */
 .edge-glow {
   background: radial-gradient(
     ellipse at center,
@@ -1705,9 +1445,289 @@ opacity: 0.7;
   animation: glowPulse 10s ease-in-out infinite;
 }
 .edge-glow--left {
-  left: -220px;   /* push from left edge */
+  left: -220px;
 }
 
 .edge-glow--right {
-  right: -220px;  /* push from right edge */
+  right: -220px;
+}
+
+/* ===============================
+   HERO BUTTONS AS LINKS
+================================ */
+
+.actions a.primary,
+.actions a.secondary {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.actions a.primary {
+  background: white;
+  color: black;
+}
+
+.actions a.secondary {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+/* ===============================
+   CONTRAST FIXES
+================================ */
+
+.nav-center a {
+  opacity: 0.85;
+}
+
+.feature-tags li {
+  opacity: 0.55;
+}
+
+/* ===============================
+   KEYBOARD FOCUS STYLES
+================================ */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.feature-tags li:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   PREFERS REDUCED MOTION
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===============================
+   RESPONSIVE: TABLET (max 1024px)
+================================ */
+
+@media (max-width: 1024px) {
+  .feature .feature-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .feature .feature-card {
+    width: 100%;
+    height: 300px;
+  }
+
+  .feature-large .feature-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .feature-large .feature-card {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+  }
+
+  .feature-large .feature-media {
+    width: 100%;
+    height: 300px;
+  }
+
+  .service {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .feature-left h2,
+  .feature .feature-left h2 {
+    font-size: 48px;
+  }
+
+  .feature-large .feature-left h2 {
+    font-size: 48px;
+  }
+
+  .services h2 {
+    font-size: 42px;
+  }
+}
+
+/* ===============================
+   RESPONSIVE: MOBILE (max 768px)
+================================ */
+
+@media (max-width: 768px) {
+  .spline-bg iframe {
+    pointer-events: none;
+  }
+
+  /* Navbar */
+  .nav-container {
+    grid-template-columns: 1fr auto;
+    padding: 0 1.5rem;
+  }
+
+  .nav-center {
+    display: none;
+  }
+
+  .navbar {
+    height: 70px;
+  }
+
+  .hero {
+    padding-top: 70px;
+  }
+
+  .content {
+    min-height: calc(100svh - 70px);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  /* Feature section */
+  .feature {
+    padding: 4rem 5vw;
+  }
+
+  .feature .feature-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .feature .feature-card {
+    width: 100%;
+    height: 240px;
+  }
+
+  .feature-left h2,
+  .feature .feature-left h2 {
+    font-size: 32px;
+  }
+
+  .feature-info h3 {
+    font-size: 22px;
+  }
+
+  .feature .feature-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Services */
+  .services {
+    padding: 4rem 5vw;
+  }
+
+  .services h2 {
+    font-size: 32px;
+    margin-bottom: 3rem;
+  }
+
+  .service-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .service {
+    width: 100%;
+    height: auto;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 4rem 5vw;
+  }
+
+  .cta h2 {
+    font-size: 28px;
+  }
+
+  /* Feature large */
+  .feature-large {
+    padding: 4rem 5vw;
+  }
+
+  .feature-large .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .feature-large .feature-card {
+    width: 100%;
+    height: auto;
+    min-height: 260px;
+  }
+
+  .feature-large .feature-media {
+    width: 100%;
+    height: 240px;
+  }
+
+  .feature-large .feature-left h2 {
+    font-size: 32px;
+  }
+
+  .feature-large .feature-card h4 {
+    font-size: 24px;
+  }
+
+  /* FAQ */
+  .faq {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    height: auto;
+  }
+
+  .faq h2 {
+    font-size: 28px;
+  }
+
+  .faq-question {
+    font-size: 18px;
+  }
+
+  /* Footer */
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .footer-social {
+    position: static;
+    margin-top: 2rem;
+  }
+
+  .footer-glass {
+    padding: 2rem 0;
+  }
 }
