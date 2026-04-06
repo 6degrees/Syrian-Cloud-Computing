@@ -1,67 +1,10 @@
 /* ===============================
-   HERO PARALLAX BACKGROUND
+   ACCESSIBILITY: REDUCED MOTION
 ================================ */
 
-const layers = document.querySelectorAll(".layer");
-
-/* Respect accessibility settings */
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
-
-let targetX = 50;
-let targetY = 50;
-let currentX = 50;
-let currentY = 50;
-
-let active = false;
-let timeout = null;
-let rafId = null;
-
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
-
-function animate() {
-  if (!active) {
-    rafId = null;
-    return;
-  }
-
-  currentX = lerp(currentX, targetX, 0.04);
-  currentY = lerp(currentY, targetY, 0.04);
-
-  layers.forEach((layer, i) => {
-    const depth = (i + 1) * 0.18;
-
-    layer.style.setProperty("--gx", `${currentX}%`);
-    layer.style.setProperty("--gy", `${currentY}%`);
-
-    layer.style.transform = `
-      translate(
-        ${(currentX - 50) * depth}px,
-        ${(currentY - 50) * depth}px
-      )
-    `;
-  });
-
-  rafId = requestAnimationFrame(animate);
-}
-
-if (!prefersReducedMotion) {
-  window.addEventListener("mousemove", (e) => {
-    targetX = (e.clientX / window.innerWidth) * 100;
-    targetY = (e.clientY / window.innerHeight) * 100;
-    active = true;
-
-    if (!rafId) animate();
-
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      active = false;
-    }, 150);
-  });
-}
 
 /* ===============================
    FAQ ACCORDION
@@ -76,12 +19,14 @@ document.querySelectorAll(".faq-question").forEach((q) => {
       if (i !== item) {
         i.classList.remove("active");
         i.querySelector(".faq-answer").style.maxHeight = null;
+        i.querySelector(".faq-question").setAttribute("aria-expanded", "false");
       }
     });
 
     const isOpen = item.classList.contains("active");
 
     item.classList.toggle("active");
+    q.setAttribute("aria-expanded", !isOpen);
 
     answer.style.maxHeight = isOpen
       ? null
@@ -91,12 +36,17 @@ document.querySelectorAll(".faq-question").forEach((q) => {
 
 
 /* ===============================
-   NAVBAR SCROLL EFFECT
+   NAVBAR SCROLL EFFECT + SPLINE GUARD
+   (single scroll listener with rAF)
 ================================ */
 
 const navbar = document.querySelector(".navbar");
+const splineIframe = document.querySelector(".spline-bg iframe");
+let scrollTimeout;
+let scrollTicking = false;
 
-window.addEventListener("scroll", () => {
+function onScroll() {
+  /* Navbar blur/opacity */
   const scroll = Math.min(window.scrollY, 120);
   const t = scroll / 120;
   const eased = t * t;
@@ -104,7 +54,27 @@ window.addEventListener("scroll", () => {
   navbar.style.setProperty("--bg-opacity", (0.15 * eased).toFixed(3));
   navbar.style.setProperty("--blur-amount", `${24 * eased}px`);
   navbar.style.setProperty("--shadow-opacity", (0.25 * eased).toFixed(3));
-});
+
+  scrollTicking = false;
+}
+
+window.addEventListener("scroll", () => {
+  /* Spline iframe: disable pointer-events during scroll */
+  if (splineIframe) {
+    splineIframe.style.pointerEvents = "none";
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      splineIframe.style.pointerEvents = "auto";
+    }, 200);
+  }
+
+  /* Throttle navbar updates to one per frame */
+  if (!scrollTicking) {
+    requestAnimationFrame(onScroll);
+    scrollTicking = true;
+  }
+}, { passive: true });
+
 /* ===============================
    SCROLL REVEAL OBSERVER
 ================================ */
@@ -112,7 +82,7 @@ window.addEventListener("scroll", () => {
 const revealElements = document.querySelectorAll(
     "section, footer"
   );
-  
+
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -127,35 +97,12 @@ const revealElements = document.querySelectorAll(
       rootMargin: "0px 0px -80px 0px",
     }
   );
-  
+
   revealElements.forEach((el) => {
     el.classList.add("reveal");
     revealObserver.observe(el);
   });
-  /* ===============================
-   FEATURE TAGS TOGGLE
-================================ */
 
-const featureTags = document.querySelectorAll(".feature-tags li");
-
-featureTags.forEach(tag => {
-  tag.addEventListener("click", () => {
-    featureTags.forEach(t => t.classList.remove("active"));
-    tag.classList.add("active");
-  });
-});
-const splineIframe = document.querySelector(".spline-bg iframe");
-
-let scrollTimeout;
-
-window.addEventListener("scroll", () => {
-  splineIframe.style.pointerEvents = "none";
-
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    splineIframe.style.pointerEvents = "auto";
-  }, 150);
-});
 /* ===============================
    FEATURE TAG IMAGE SWITCH
 ================================ */
@@ -166,81 +113,37 @@ const tagMap = {
   Innovation: "./Assets/innovation.jpg",
 };
 
-const tags = document.querySelectorAll(".feature-tags li");
+const featureTags = document.querySelectorAll(".feature-tags li");
 const featureVideo = document.getElementById("featureVideo");
 const featureImage = document.getElementById("featureImage");
 
-tags.forEach(tag => {
+featureTags.forEach(tag => {
   tag.addEventListener("click", () => {
-    // Active state
-    tags.forEach(t => t.classList.remove("active"));
+    featureTags.forEach(t => t.classList.remove("active"));
     tag.classList.add("active");
 
     const label = tag.textContent.trim();
 
-    // ALWAYS show image (no video at all)
     if (featureVideo) {
       featureVideo.pause();
       featureVideo.style.display = "none";
     }
 
-    featureImage.src = tagMap[label];
-    featureImage.style.display = "block";
+    if (featureImage && tagMap[label]) {
+      featureImage.src = tagMap[label];
+      featureImage.style.display = "block";
+    }
   });
 });
 
 /* Default load = Technology image */
-featureImage.src = tagMap["Technology"];
-featureImage.style.display = "block";
+if (featureImage) {
+  featureImage.src = tagMap["Technology"];
+  featureImage.style.display = "block";
+}
 if (featureVideo) {
   featureVideo.style.display = "none";
 }
-/* ===============================
-   INDUSTRIES TOGGLE (FEATURE)
-================================ */
-
-const industryData = {
-  technology: {
-    image: "./Assets/tech.jpg",
-    title: "Technology Infrastructure",
-    desc: "High-performance cloud platforms built for modern applications, scalability, and speed.",
-    stats: ["2.5× Faster", "Cloud Native"]
-  },
-  security: {
-    image: "./Assets/security.jpg",
-    title: "Cloud Security",
-    desc: "End-to-end encrypted systems designed for compliance, resilience, and data protection.",
-    stats: ["Zero Trust", "99.99% Secure"]
-  },
-  innovation: {
-    image: "./Assets/innovation.jpg",
-    title: "Innovation & AI",
-    desc: "AI-powered cloud solutions enabling automation, predictive analytics, and intelligent growth.",
-    stats: ["AI Driven", "Future Ready"]
-  }
-};
-
-const tag = document.querySelectorAll(".feature-tags li");
-const image = document.getElementById("industryImage");
-const title = document.getElementById("industryTitle");
-const desc = document.getElementById("industryDesc");
-const stats = document.getElementById("industryStats");
-
-tags.forEach(tag => {
-  tag.addEventListener("click", () => {
-    tags.forEach(t => t.classList.remove("active"));
-    tag.classList.add("active");
-
-    const key = tag.dataset.industry;
-    const data = industryData[key];
-
-    image.src = data.image;
-    title.textContent = data.title;
-    desc.textContent = data.desc;
-
-    stats.innerHTML = data.stats.map(s => `<span>${s}</span>`).join("");
-  });
-});
 /* ===============================
    FIXED EDGE GLOWS (LEFT + RIGHT)
 ================================ */
